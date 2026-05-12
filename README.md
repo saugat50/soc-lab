@@ -73,7 +73,7 @@ This work was developed as a cybersecurity research prototype for anomaly-based 
 # System Architecture
 
 <p align="center">
-  <img src="architecture/Proposed Semi-Autonomous SOC Workflow Architecture" width="1200">
+  <img src="architecture/Proposed Semi-Autonomous SOC Workflow Architecture.png" width="1200">
 </p>
 
 The framework follows a semi-autonomous SOC workflow:
