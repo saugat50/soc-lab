@@ -202,7 +202,7 @@ soc-lab/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/soc-lab.git
+git clone https://github.com/saugat50/soc-lab.git
 
 cd soc-lab
 ```
