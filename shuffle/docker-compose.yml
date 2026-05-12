@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  shuffle-opensearch:
+    image: opensearchproject/opensearch:2.11.0
+    container_name: shuffle-opensearch
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+      bootstrap.memory_lock: "true"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./shuffle-database:/usr/share/opensearch/data
+    ports:
+      - "9201:9200"
+    networks:
+      - soc-net
+    restart: unless-stopped
+
+  shuffle-backend:
+    image: frikky/shuffle-backend:latest
+    container_name: shuffle-backend
+    environment:
+      SHUFFLE_OPENSEARCH_URL: "http://shuffle-opensearch:9200"
+      SHUFFLE_DEFAULT_PASSWORD: "admin"
+    depends_on:
+      - shuffle-opensearch
+    networks:
+      - soc-net
+    restart: unless-stopped
+
+  shuffle-frontend:
+    image: frikky/shuffle-frontend:latest
+    container_name: shuffle-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - shuffle-backend
+    networks:
+      - soc-net
+    restart: always
+
+  shuffle-orborus:
+    image: frikky/shuffle-orborus:latest
+    container_name: shuffle-orborus
+    environment:
+      SHUFFLE_BACKEND: "http://shuffle-backend:5001"
+    depends_on:
+      - shuffle-backend
+    networks:
+      - soc-net
+    restart: unless-stopped
+
+networks:
+  soc-net:
+    external: true
+
+
