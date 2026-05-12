@@ -242,7 +242,8 @@ pip install -r requirements.txt
 ## Start Elasticsearch
 
 ```bash
-sudo systemctl start elasticsearch
+cd elk
+sudo docker compose up -d
 ```
 
 Verify:
@@ -263,6 +264,19 @@ Open:
 
 ```text
 http://localhost:5601
+```
+
+## Start shuffle
+
+```bash
+cd shuffle
+sudo docker compose up -d
+```
+
+Open:
+
+```text
+http://localhost:3001
 ```
 
 ---
